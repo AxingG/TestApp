@@ -30,7 +30,7 @@ class ExecutorServices private constructor(diskIO: ExecutorService = diskIoExecu
 
         @Volatile
         private var mInstance: ExecutorServices? = null
-        private var mDiskIO: ExecutorService
+        private var mDiskIO: ExecutorService? = null
 
         fun init() {
             if (mInstance == null) {
@@ -43,7 +43,7 @@ class ExecutorServices private constructor(diskIO: ExecutorService = diskIoExecu
         }
 
         fun io(): Scheduler {
-            return Schedulers.from(mDiskIO)
+            return mDiskIO!!.let { Schedulers.from(it) }
         }
 
         /** main线程  */

@@ -1,7 +1,6 @@
 package com.cn.myapplication
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 
 /**
@@ -11,15 +10,15 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
  */
 class NoSelectActivity : RxAppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.act_no_select)
-        selectType(0)
+        println(selectType(0))
         selectType(1)
         selectType(2)
     }
 
-    private fun selectType(type: Int) {
-
+    private fun selectType(type: Int): String {
+        return "(●￣(ｴ)￣●)"
     }
 }
