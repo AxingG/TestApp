@@ -23,7 +23,7 @@ class MainActivity : RxAppCompatActivity() {
     }
 
     private fun initData() {
-        //        ExecutorServices.init();
+        //        ExecutorUtil.init();
         //        sendData(1);
     }
 
@@ -43,7 +43,7 @@ class MainActivity : RxAppCompatActivity() {
                 emitter.onNext(i)
             }
         })
-                .compose(ExecutorServices.applyGlobalSchedulers(getLifecycleTransformer<Any>()))
+                .compose(ExecutorUtil.applyGlobalSchedulers(getLifecycleTransformer<Any>()))
                 .subscribe { o ->
                     if (o is Int) {
                         Log.e("TAG", o.toString() + "")

@@ -8,9 +8,7 @@ import com.trello.rxlifecycle2.android.ActivityEvent
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
-import io.reactivex.functions.Consumer
 
 class JumpActivity : RxAppCompatActivity() {
 
@@ -31,7 +29,7 @@ class JumpActivity : RxAppCompatActivity() {
 
             emitter.onNext(num)
         })
-                .compose(ExecutorServices.applyGlobalSchedulers(getLifecycleTransformer<Any>()))
+                .compose(ExecutorUtil.applyGlobalSchedulers(getLifecycleTransformer<Any>()))
                 .subscribe { o ->
                     if (o is Int) {
                         Log.e("TAG", o.toString() + "_lalala")
