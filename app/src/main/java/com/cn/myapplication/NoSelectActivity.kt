@@ -21,6 +21,7 @@ class NoSelectActivity : RxAppCompatActivity() {
         selectType(1)
         selectType(2)
         loadData()
+        println("主干")
     }
 
     private fun selectType(type: Int): String {
