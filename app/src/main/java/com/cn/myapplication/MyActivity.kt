@@ -13,14 +13,14 @@ import kotlin.coroutines.EmptyCoroutineContext
  */
 open class MyActivity : AppCompatActivity() {
 
-    fun <T> GlobalScope.asyncWithLifecycle(lifecycleOwner: LifecycleOwner,
-                                           context: CoroutineContext = EmptyCoroutineContext,
-                                           start: CoroutineStart = CoroutineStart.DEFAULT,
-                                           block: suspend CoroutineScope.() -> T): Deferred<T> {
+    suspend fun <T> GlobalScope.asyncWithLifecycle(lifecycleOwner: LifecycleOwner,
+                                                   context: CoroutineContext = EmptyCoroutineContext,
+                                                   start: CoroutineStart = CoroutineStart.DEFAULT,
+                                                   block: suspend CoroutineScope.() -> T): T {
         val deferred = GlobalScope.async(context, start) {
             block()
         }
         lifecycleOwner.lifecycle.addObserver(LifecycleCoroutineListener(deferred))
-        return deferred
+        return deferred.await()
     }
 }

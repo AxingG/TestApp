@@ -59,7 +59,7 @@ class NoSelectActivity : MyActivity() {
             delay(3000)
             println("绑定生命周期的协程内执行异步任务：Thread_id = " + Thread.currentThread().id)
             return@asyncWithLifecycle "返回结果"
-        }.await()
+        }
     }
 
 }
