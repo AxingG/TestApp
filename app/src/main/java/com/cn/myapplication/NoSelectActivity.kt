@@ -1,7 +1,6 @@
 package com.cn.myapplication
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import kotlinx.coroutines.*
 
 /**
@@ -9,7 +8,7 @@ import kotlinx.coroutines.*
  * @created on: 2019/7/24 16:08
  * @description:
  */
-class NoSelectActivity : AppCompatActivity() {
+class NoSelectActivity : MyActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +34,7 @@ class NoSelectActivity : AppCompatActivity() {
         println("test2主线程：Thread_id = " + Thread.currentThread().id)
         GlobalScope.launch(Dispatchers.Main) {
             println("test2启动一个协程：Thread_id = " + Thread.currentThread().id)
-            val result = myTask()
+            val result = myTaskLifeCycle()
             println("test2异步执行结果：$result")
             println("test2Launch完毕")
         }
@@ -45,7 +44,7 @@ class NoSelectActivity : AppCompatActivity() {
     private suspend fun myTask(): String {
         return GlobalScope.async {
             delay(3000)
-            println("test2协程内执行异步任务：Thread_id = " + Thread.currentThread().id)
+            println("协程内执行异步任务：Thread_id = " + Thread.currentThread().id)
             return@async "返回结果"
         }.await()
     }
@@ -54,4 +53,13 @@ class NoSelectActivity : AppCompatActivity() {
         super.onDestroy()
         println("destroy()")
     }
+
+    private suspend fun myTaskLifeCycle(): String {
+        return GlobalScope.asyncWithLifecycle(this) {
+            delay(3000)
+            println("绑定生命周期的协程内执行异步任务：Thread_id = " + Thread.currentThread().id)
+            return@asyncWithLifecycle "返回结果"
+        }.await()
+    }
+
 }
