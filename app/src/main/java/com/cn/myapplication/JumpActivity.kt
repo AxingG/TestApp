@@ -1,16 +1,9 @@
 package com.cn.myapplication
 
 import android.os.Bundle
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 
-import com.trello.rxlifecycle2.LifecycleTransformer
-import com.trello.rxlifecycle2.android.ActivityEvent
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
-
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
-
-class JumpActivity : RxAppCompatActivity() {
+class JumpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,23 +14,6 @@ class JumpActivity : RxAppCompatActivity() {
     }
 
     private fun sendData(num: Int) {
-        Observable.create(ObservableOnSubscribe<Int> { emitter ->
-            try {
-                Thread.sleep(200)
-            } catch (e: Exception) {
-            }
 
-            emitter.onNext(num)
-        })
-                .compose(ExecutorUtil.applyGlobalSchedulers(getLifecycleTransformer<Any>()))
-                .subscribe { o ->
-                    if (o is Int) {
-                        Log.e("TAG", o.toString() + "_lalala")
-                    }
-                }.isDisposed
-    }
-
-    private fun <T> getLifecycleTransformer(): LifecycleTransformer<T> {
-        return bindUntilEvent(ActivityEvent.DESTROY)
     }
 }
